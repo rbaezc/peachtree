@@ -2,9 +2,11 @@ import React, { Fragment, useEffect, useMemo } from 'react';
 import transactionData from '../mock/transactions.json';
 import DataTable from './DataTable';
 import { useState } from 'react';
+import ApiClient from "../services/ApiClient";
 
 const Transactions = () => {
     const [transaction, setTransaction] = useState([]);
+    const apiClient = new ApiClient();
 
     const columns = useMemo(
         () => [
@@ -51,8 +53,19 @@ const Transactions = () => {
         []
     );
 
+    const getTransactions = () => {
+        apiClient.getService('transactions').then(response => {
+            setTransaction(response);
+        }).catch(error => {
+            if (error === 401 || error === 404) {
+                console.log('Ocurrio un error al intentar cargar los datos');
+            }
+        })
+    }
+
     useEffect(() => {
-        setTransaction(transactionData.data);
+        // setTransaction(transactionData.data);
+        getTransactions();
     }, []);
 
     return (
