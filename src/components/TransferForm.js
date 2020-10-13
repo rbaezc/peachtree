@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import data from '../mock/transactions.json';
 import Modal from './Modal';
-import {toTimestamp} from '../helpers/Common';
+import ApiClient from "../services/ApiClient";
 
 const TransferForm = () => {
-    const [transactions, setTransactions] = useState([]);
+    const apiClient = new ApiClient();
     const [balance, setBalance] = useState(5824.76);
     const fromAccount = useFormInput('Free Checking(4692) - ' + `${balance}`);
     const toAccount = useFormInput('');
@@ -20,20 +19,23 @@ const TransferForm = () => {
     const saveTransaction = (e) => {
         e.preventDefault();
         setBalance(balance - amount.value);
-        const mydate = new Date();
 
         var payload = {
             amount: amount.value,
             merchant: toAccount.value,
-            transactionDate: toTimestamp(mydate.getDate()),
+            transactionDate: new Date(),
             transactionType: 'Online Transfer',
             categoryCode: '#d' + Math.random()
         };
-
-        const save = JSON.stringify(payload);
-        const blob = new Blob([save], {type: "text/json"});
-
         
+        apiClient.postService('transactions', payload).then(response => {
+            alert('Transaction sucessfully processed');
+            modalClose();
+        }).catch(error => {
+            if (error === 401 || error === 404) {
+                console.log('An error ocurred while trying to save data.');
+            }
+        });
     }
 
     const modalOpen = () => {

@@ -58,7 +58,7 @@ const Transactions = () => {
             setTransaction(response);
         }).catch(error => {
             if (error === 401 || error === 404) {
-                console.log('Ocurrio un error al intentar cargar los datos');
+                console.log('Error loading data');
             }
         })
     }
