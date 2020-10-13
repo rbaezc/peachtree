@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import Modal from './Modal';
 import ApiClient from "../services/ApiClient";
-
+const apiClient = new ApiClient();
 const TransferForm = ({ onPostedTransaction }) => {
-    const apiClient = new ApiClient();
     const [balance, setBalance] = useState(5824.76);
     const fromAccount = 'Free Checking(4692) - ' + balance;
     const toAccount = useFormInput('');
