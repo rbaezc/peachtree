@@ -28,7 +28,7 @@ function App() {
     <Fragment>
       <div className="header">
         <div className="wrapper">
-          <img src={logo} className="logo" />
+          <img src={logo} className="logo" alt="Peach Tree" />
         </div>
       </div>
       <div className="wrapper">

@@ -1,19 +1,27 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import Modal from './Modal';
 import ApiClient from "../services/ApiClient";
 
 const TransferForm = ({ onPostedTransaction }) => {
     const apiClient = new ApiClient();
     const [balance, setBalance] = useState(5824.76);
-    const fromAccount = 'Free Checking(4692) - ' + `${balance}`;
+    const fromAccount = 'Free Checking(4692) - ' + balance;
     const toAccount = useFormInput('');
     const amount = useFormInput('');
     const [showModal, setShowModal] = useState(false);
+    const [message, setMessage] = useState('');
+    const [show, setShow] = useState('');
 
     const prepareTransaction = (e) => {
         e.preventDefault();
         // preview
-        modalOpen();
+        if (toAccount.value === '' || toAccount.value === undefined) {
+            alert('Fill beneficiary account please');
+        } else if (amount.value === '' || amount.value === undefined) {
+            alert('Fill amount please');
+        } else {
+            modalOpen();
+        }
     }
 
     const saveTransaction = (e) => {
@@ -29,9 +37,14 @@ const TransferForm = ({ onPostedTransaction }) => {
         };
         
         apiClient.postService('transactions', payload).then(response => {
-            alert('Transaction sucessfully processed');
+            setShow(true);
+            setMessage('Transaction sucessfully processed');
             onPostedTransaction();
-            modalClose();
+            setTimeout( () => {
+                setShowModal(false);
+                setShow(false);
+                setMessage('');
+            }, 2000);
         }).catch(error => {
             if (error === 401 || error === 404) {
                 console.log('An error ocurred while trying to save data.');
@@ -101,6 +114,9 @@ const TransferForm = ({ onPostedTransaction }) => {
                 </div>
                 <div className="column-12">
                     <button className="btn btn-warning text-upper" onClick={saveTransaction}>Confirm Transaction</button>
+                </div>
+                <div className="" show={show}>
+                    {message}
                 </div>
             </Modal>
         </Fragment>

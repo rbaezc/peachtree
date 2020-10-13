@@ -157,6 +157,12 @@ fieldset:disabled a.btn {
     border-color: orangered;
 }
 
+.btn-danger {
+    color: #fff;
+    background-color: darkred;
+    border-color: darkred;
+}
+
 /* DataTable */
 table {
     width: 100%;
@@ -239,26 +245,11 @@ table th {
     box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3);
 }
 
-.overlay {
+.modal-close {
     position: absolute;
+    font-size: 22px;
     top: 0;
-    bottom: 0;
-    left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.5);
-    transition: opacity 200ms;
-    visibility: hidden;
-    opacity: 0;
-  }
-  
-  .overlay .cancel {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    cursor: default;
-  }
-  
-  .overlay:target {
-    visibility: visible;
-    opacity: 1;
-  }
+    text-decoration: none;
+    color: darkred;
+}
