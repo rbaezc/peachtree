@@ -37,5 +37,5 @@ B) you need to clone also api repository that is in this url:
 
 C) Run the react js application using the command: npm start
     the application will ask to run in other port as node/express api
-    will run on port 3000, the just say yes, and the react application will
+    will run on port 3000, then just say yes, and the react application will
     run on port 3001
