@@ -27,29 +27,32 @@ const TransferForm = ({ onPostedTransaction }) => {
     const saveTransaction = (e) => {
         e.preventDefault();
         setBalance(balance - amount.value);
-
-        var payload = {
-            amount: amount.value,
-            merchant: toAccount.value,
-            transactionDate: new Date(),
-            transactionType: 'Online Transfer',
-            categoryCode: '#d' + Math.random()
-        };
-        
-        apiClient.postService('transactions', payload).then(response => {
-            setShow(true);
-            setMessage('Transaction sucessfully processed');
-            onPostedTransaction();
-            setTimeout( () => {
-                setShowModal(false);
-                setShow(false);
-                setMessage('');
-            }, 2000);
-        }).catch(error => {
-            if (error === 401 || error === 404) {
-                console.log('An error ocurred while trying to save data.');
-            }
-        });
+        if (balance <= -500) {
+            alert('Cant transfer more money');
+        } else {
+            var payload = {
+                amount: amount.value,
+                merchant: toAccount.value,
+                transactionDate: new Date(),
+                transactionType: 'Online Transfer',
+                categoryCode: '#d' + Math.random()
+            };
+            
+            apiClient.postService('transactions', payload).then(response => {
+                setShow(true);
+                setMessage('Transaction sucessfully processed');
+                onPostedTransaction();
+                setTimeout( () => {
+                    setShowModal(false);
+                    setShow(false);
+                    setMessage('');
+                }, 2000);
+            }).catch(error => {
+                if (error === 401 || error === 404) {
+                    console.log('An error ocurred while trying to save data.');
+                }
+            });
+        }
     }
 
     const modalOpen = () => {
