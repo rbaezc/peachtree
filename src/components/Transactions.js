@@ -1,13 +1,7 @@
-import React, { Fragment, useEffect, useMemo } from 'react';
-import transactionData from '../mock/transactions.json';
+import React, { Fragment, useMemo } from 'react';
 import DataTable from './DataTable';
-import { useState } from 'react';
-import ApiClient from "../services/ApiClient";
 
-const Transactions = () => {
-    const [transaction, setTransaction] = useState([]);
-    const apiClient = new ApiClient();
-
+const Transactions = ({ transactions }) => {
     const columns = useMemo(
         () => [
             {
@@ -53,21 +47,6 @@ const Transactions = () => {
         []
     );
 
-    const getTransactions = () => {
-        apiClient.getService('transactions').then(response => {
-            setTransaction(response);
-        }).catch(error => {
-            if (error === 401 || error === 404) {
-                console.log('Error loading data');
-            }
-        })
-    }
-
-    useEffect(() => {
-        // setTransaction(transactionData.data);
-        getTransactions();
-    }, []);
-
     return (
         <Fragment>
             <div className="c-card">
@@ -78,7 +57,7 @@ const Transactions = () => {
                 </div>
                 <div className="c-card_body">
                     <div className="column-12">
-                        <DataTable columns={columns} data={transaction} />
+                        <DataTable columns={columns} data={transactions} />
                     </div>
                 </div>
             </div>

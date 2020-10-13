@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react';
 import Modal from './Modal';
 import ApiClient from "../services/ApiClient";
 
-const TransferForm = () => {
+const TransferForm = ({ onPostedTransaction }) => {
     const apiClient = new ApiClient();
     const [balance, setBalance] = useState(5824.76);
-    const fromAccount = useFormInput('Free Checking(4692) - ' + `${balance}`);
+    const fromAccount = 'Free Checking(4692) - ' + `${balance}`;
     const toAccount = useFormInput('');
     const amount = useFormInput('');
     const [showModal, setShowModal] = useState(false);
@@ -30,6 +30,7 @@ const TransferForm = () => {
         
         apiClient.postService('transactions', payload).then(response => {
             alert('Transaction sucessfully processed');
+            onPostedTransaction();
             modalClose();
         }).catch(error => {
             if (error === 401 || error === 404) {
@@ -60,7 +61,7 @@ const TransferForm = () => {
                         <div className="row">
                             <div className="form-group">
                                 <label className="text-black text-upper">From Account:</label>
-                                <input type="text" className="form-control" {...fromAccount} disabled="disabled" />
+                                <input type="text" className="form-control" value={fromAccount} disabled />
                             </div>
                         </div>
                         <div className="row">
@@ -89,7 +90,7 @@ const TransferForm = () => {
                 <div className="column-12">
                     <p>Details:</p>
                     <p>
-                        From Account: {fromAccount.value}
+                        From Account: {fromAccount}
                     </p>
                     <p>
                         To Account: {toAccount.value}
