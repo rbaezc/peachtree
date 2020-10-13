@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal hides when click on close button 1`] = `
+<div
+  className="modal d-none"
+>
+  <div
+    className="modal-container"
+  >
+    <button
+      className="modal-close"
+      type="button"
+    >
+      close
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Modal shows when show option is true 1`] = `
+<div
+  className="modal d-block"
+>
+  <div
+    className="modal-container"
+  >
+    <button
+      className="modal-close"
+      type="button"
+    >
+      close
+    </button>
+  </div>
+</div>
+`;
